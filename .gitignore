@@ -1,1 +1,38 @@
+# Dependencies
+node_modules/
+
+# Environment variables (contains secrets)
 .env
+.env.local
+.env.*.local
+
+# TypeScript build output
+dist/
+*.tsbuildinfo
+
+# Bot runtime files
+events.jsonl
+processed_requests.json
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Editor directories
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Optional: Claude Code local state
+.claude/

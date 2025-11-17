@@ -3,7 +3,15 @@ import { botConfig } from './config';
 import { RFQEventData } from './types';
 
 function runCastCommand(args: string[], retryCount: number = 0): string {
-  const command = `cast ${args.join(' ')}`;
+  // Add gas price bump if retrying to handle "replacement transaction underpriced"
+  let finalArgs = [...args];
+  if (retryCount > 0) {
+    const gasPriceMultiplier = 1 + (retryCount * 0.2); // 20% bump per retry
+    const gasPrice = Math.floor(20000000000 * gasPriceMultiplier); // 20 gwei base
+    finalArgs.push('--gas-price', gasPrice.toString());
+  }
+
+  const command = `cast ${finalArgs.join(' ')}`;
   console.log(`[EXECUTOR] Running: ${command}`);
 
   try {
@@ -18,8 +26,8 @@ function runCastCommand(args: string[], retryCount: number = 0): string {
     const errorMessage = err.stderr || err.message || '';
 
     // Check for nonce-related errors and retry
-    if (errorMessage.includes('nonce too low') && retryCount < 3) {
-      console.warn(`[EXECUTOR] Nonce conflict detected, retrying (attempt ${retryCount + 1}/3)...`);
+    if ((errorMessage.includes('nonce too low') || errorMessage.includes('replacement transaction underpriced')) && retryCount < 3) {
+      console.warn(`[EXECUTOR] Transaction conflict detected, retrying with higher gas (attempt ${retryCount + 1}/3)...`);
       // Wait a bit for pending transactions to be mined
       execSync('sleep 2');
       return runCastCommand(args, retryCount + 1);
