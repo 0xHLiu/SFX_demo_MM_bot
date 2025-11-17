@@ -1,0 +1,35 @@
+{
+  "name": "scalarfx-rfq",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/unified.ts",
+    "listener": "ts-node src/index.ts",
+    "bot": "ts-node src/bot/index.ts",
+    "build": "tsc",
+    "start:prod": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0xHLiu/scalarfx-rfq.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/0xHLiu/scalarfx-rfq/issues"
+  },
+  "homepage": "https://github.com/0xHLiu/scalarfx-rfq#readme",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "ethers": "^6.15.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
